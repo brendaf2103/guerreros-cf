@@ -1,0 +1,438 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Academia Guerreros CF Yauhquemehcan</title>
+<meta name="description" content="Academia Guerreros CF Yauhquemehcan — Fe, disciplina y pasión por el fútbol en San Dionisio Yauhquemehcan, Tlaxcala. Campeonas Nacionales FMF7 2026."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700;800&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@700;800;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="{% static 'core/css/style.css' %}"/>
+<link rel="stylesheet" href="{% static 'core/css/noticias.css' %}"/>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#inicio" class="nav-brand">
+      <img src="{% static 'core/img/logo.png' %}" alt="Logo Guerreros CF"/>
+      <span>Guerreros <em>CF</em></span>
+    </a>
+    <button class="nav-toggle" onclick="toggleNav()">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#inicio">Inicio</a></li>
+      <li><a href="#noticias">Noticias</a></li>
+      <li><a href="#campeonas">Campeonas</a></li>
+      <li><a href="#finales">Finales</a></li>
+      <li><a href="#galeria">Galería</a></li>
+      <li><a href="#publicidad">Publicidad</a></li>
+      <li><a href="#video">Video</a></li>
+      <li><a href="#academia">Academia</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-slides" id="heroSlides">
+    {% for slide in hero_slides %}
+    <div class="hslide{% if forloop.first %} active{% endif %}"><img src="{{ slide.imagen.url }}" alt="Academia Guerreros CF"/></div>
+    {% endfor %}
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="slider-arrows">
+    <button class="sarrow" onclick="heroSlide(-1)">‹</button>
+    <button class="sarrow" onclick="heroSlide(1)">›</button>
+  </div>
+  <div class="hero-content">
+    <div class="hero-tag">⚽ Yauhquemehcan, Tlaxcala</div>
+    <h1>Academia<br/><em>Guerreros CF</em></h1>
+    <p>No somos los únicos, pero sí los mejores. Fe, disciplina y pasión por el fútbol desde San Dionisio Yauhquemehcan.</p>
+    <div class="hero-btns">
+      <a href="#contacto" class="btn-gold">Únete ahora</a>
+      <a href="#academia" class="btn-outline">Conocer más</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  {% for e in estadisticas %}
+  <div class="stat-item"><div class="stat-num">{{ e.numero }}</div><div class="stat-lbl">{{ e.etiqueta }}</div></div>
+  {% endfor %}
+</div>
+
+<!-- NOTICIAS (apartado independiente: core/templates/core/partials/noticias.html) -->
+{% include "core/partials/noticias.html" %}
+
+<!-- CAMPEONAS -->
+<section id="campeonas" class="campeonas-bg">
+  <div class="camp-inner">
+    <div class="camp-grid">
+      <div>
+        <div class="camp-badge">🏆 Campeones Nacionales</div>
+        <h2 class="camp-title">
+          <span class="pink">Guerreras CF</span><br/>
+          <span class="gold">¡CAMPEONAS!</span>
+        </h2>
+        <p class="camp-desc">
+          El equipo femenil de la Academia Guerreros CF Yauhquemehcan logró coronarse
+          campeón en el torneo de la <strong>Federación Mexicana de Fútbol 7</strong>,
+          representando con orgullo a Tlaxcala. Un logro histórico que demuestra que
+          con disciplina, esfuerzo y trabajo en equipo, todo es posible.
+        </p>
+        <div class="camp-achievements">
+          {% for l in logros %}
+          <div class="camp-ach-item">
+            <span class="camp-ach-icon">{{ l.icono }}</span>
+            <div class="camp-ach-text">
+              <strong>{{ l.titulo }}</strong>
+              <span>{{ l.descripcion }}</span>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <a href="#contacto" class="btn-gold">¡Únete al equipo!</a>
+      </div>
+
+      <div class="camp-photos">
+        {% if foto_campeonas_principal %}
+        <div class="camp-photo-main">
+          <img src="{{ foto_campeonas_principal.imagen.url }}" alt="Guerreras campeonas"/>
+        </div>
+        {% endif %}
+        {% for f in fotos_campeonas_secundarias %}
+        <div class="camp-photo-sm">
+          <img src="{{ f.imagen.url }}" alt="Guerreras CF"/>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINALES DE TORNEO -->
+{% if finales_secciones %}
+<section id="finales" class="finales-sec">
+  <div class="filo-inner">
+    <div class="sec-center" style="margin-bottom:3rem">
+      <div class="sec-tag">Gran Trilogía de Finales</div>
+      <h2 class="sec-title" style="color:#fff">Campeones y <em>Premios</em></h2>
+      <div class="sec-line"></div>
+      <p style="color:rgba(255,255,255,.7);max-width:640px;margin:1rem auto 0">Así se vivieron las finales de la Liga Guerreros CF Yauhquemehcan, categoría por categoría.</p>
+    </div>
+
+    {% for seccion in finales_secciones %}
+    <div class="finales-apartado">
+      <h3 class="finales-apartado-title">Campeones <em>{{ seccion.nombre }}</em></h3>
+      <div class="finales-grid">
+        {% for eq in seccion.items %}
+        <div class="finales-card">
+          <div class="finales-img"><img src="{{ eq.imagen.url }}" alt="{{ seccion.nombre }} {{ eq.get_tipo_display }}" onclick="openLB(this.getAttribute('src'))"/></div>
+          <div class="finales-badge {% if 'mejor' in eq.tipo %}premio{% elif eq.tipo == 'liga_2' or eq.tipo == 'copa_2' or eq.tipo == 'consolacion_2' or eq.tipo == 'segundo_lugar' %}plata{% else %}oro{% endif %}">
+            {{ eq.get_tipo_display }}
+          </div>
+          {% if eq.equipo %}<div class="finales-equipo">{{ eq.equipo }}</div>{% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+
+  </div>
+</section>
+{% endif %}
+
+<!-- GALERÍA -->
+<section id="galeria" class="gallery-sec">
+  <div class="gallery-inner">
+    <div class="sec-center" style="margin-bottom:3rem">
+      <div class="sec-tag">Momentos</div>
+      <h2 class="sec-title" style="color:#fff">Nuestra <em>Galería</em></h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="masonry" id="masonry">
+      {% for foto in galeria %}
+      <div class="masonry-item">
+        <img src="{{ foto.imagen.url }}" alt="{{ foto.titulo|default:'Guerreros CF' }}" loading="lazy"/>
+      </div>
+      {% endfor %}
+    </div>
+    {% if total_galeria > galeria|length %}
+    <p class="gallery-note">Mostrando {{ galeria|length }} de {{ total_galeria }} fotos — administra y publica el resto desde el <a href="/admin/core/galeriaimagen/">panel de administración</a>.</p>
+    {% endif %}
+  </div>
+</section>
+
+<!-- FILOSOFÍA -->
+<section class="filo-sec">
+  <div class="filo-inner">
+    <div class="filo-layout">
+      <div class="filo-slider" id="filoSlider">
+        {% for slide in filosofia_slides %}
+        <div class="fslide{% if forloop.first %} active{% endif %}"><img src="{{ slide.imagen.url }}" alt="Filosofía Guerreros CF" onclick="openLB(this.getAttribute('src'))"/></div>
+        {% endfor %}
+        {% if filosofia_slides %}
+        <div class="filo-arrows">
+          <button class="farrow" onclick="filoSlide(-1)">‹</button>
+          <button class="farrow" onclick="filoSlide(1)">›</button>
+        </div>
+        <div class="filo-dots" id="filoDots"></div>
+        {% endif %}
+      </div>
+      <div class="filo-content">
+        <div class="sec-tag">Nuestra filosofía</div>
+        <h2 class="sec-title" style="font-size:clamp(2rem,4vw,3rem)">Entrena, Aprende<br/><em>Crece y Triunfa</em></h2>
+        <div class="sec-line"></div>
+        <p>En la Academia Guerreros CF formamos jugadores y personas. Nuestros entrenamientos mixtos, grupales y personalizados están diseñados para desarrollar el máximo potencial de cada atleta.</p>
+        <p>Niños, niñas y jóvenes de <strong>7 a 18 años</strong> y categoría libre para mayores de 18. Lunes, Miércoles y Viernes de 4:00 a 6:00 PM en la Unidad Deportiva de San Dionisio Yauhquemehcan.</p>
+        <ul class="values-list">
+          {% for v in valores %}
+          <li><span>{{ v.icono }}</span> {{ v.texto }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MATERIALES DE ENTRENAMIENTO -->
+{% if material_slides %}
+<section class="material-sec">
+  <div class="filo-inner">
+    <div class="sec-center" style="margin-bottom:3rem">
+      <div class="sec-tag">Guía de equipo</div>
+      <h2 class="sec-title">Materiales de <em>Entrenamiento</em></h2>
+      <div class="sec-line"></div>
+      <p style="color:rgba(255,255,255,.7);max-width:640px;margin:1rem auto 0">Conoce el equipo que usamos para potenciar el rendimiento, el equilibrio y la prevención de lesiones de nuestros atletas.</p>
+    </div>
+    <div class="filo-slider material-slider" id="materialSlider" style="margin:0 auto;max-width:900px">
+      {% for slide in material_slides %}
+      <div class="mslide{% if forloop.first %} active{% endif %}"><img src="{{ slide.imagen.url }}" alt="Material de entrenamiento Guerreros CF" onclick="openLB(this.getAttribute('src'))"/></div>
+      {% endfor %}
+      <div class="filo-arrows">
+        <button class="farrow" onclick="materialSlide(-1)">‹</button>
+        <button class="farrow" onclick="materialSlide(1)">›</button>
+      </div>
+      <div class="filo-dots" id="materialDots"></div>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- PUBLICIDAD -->
+{% if publicidad %}
+<section id="publicidad" class="ads-sec">
+  <div class="sec-center" style="margin-bottom:2.5rem;padding:0 2rem">
+    <div class="sec-tag">Convocatorias y torneos</div>
+    <h2 class="sec-title" style="color:#fff">Publicidad y <em>Anuncios</em></h2>
+    <div class="sec-line"></div>
+  </div>
+  <div class="ads-marquee-wrap">
+    <div class="ads-marquee">
+      {% for p in publicidad %}
+      <div class="ads-item"><img src="{{ p.imagen.url }}" alt="{{ p.titulo|default:'Publicidad Guerreros CF' }}" onclick="openLB(this.getAttribute('src'))"/></div>
+      {% endfor %}
+      {% for p in publicidad %}
+      <div class="ads-item" aria-hidden="true"><img src="{{ p.imagen.url }}" alt="" onclick="openLB(this.getAttribute('src'))"/></div>
+      {% endfor %}
+    </div>
+  </div>
+  <p class="ads-hint">Toca cualquier anuncio para verlo en grande · ¡No te pierdas nuestras próximas convocatorias!</p>
+</section>
+{% endif %}
+
+<!-- EVENTOS SLIDER -->
+<section id="eventos" class="evento-sec">
+  <div class="evento-inner">
+    <div class="sec-center" style="margin-bottom:3rem">
+      <div class="sec-tag">Momentos especiales</div>
+      <h2 class="sec-title" style="color:#fff">Nuestros <em>Eventos</em></h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="evento-slider">
+      {% for ev in eventos %}
+      <div class="eslide{% if forloop.first %} active{% endif %}">
+        <img src="{{ ev.imagen.url }}" alt="{{ ev.titulo }}"/>
+        <div class="eslide-overlay"></div>
+        <div class="eslide-caption">
+          <span class="eslide-badge">{{ ev.badge }}</span>
+          <h3>{{ ev.titulo }}</h3>
+          <p>{{ ev.descripcion }}</p>
+        </div>
+      </div>
+      {% endfor %}
+      <div class="earrows">
+        <button class="earrow" onclick="eventoSlide(-1)">‹</button>
+        <button class="earrow" onclick="eventoSlide(1)">›</button>
+      </div>
+    </div>
+    <div class="evento-thumbs" id="eventoThumbs">
+      {% for ev in eventos %}
+      <div class="ethumb{% if forloop.first %} active{% endif %}"><img src="{{ ev.imagen.url }}" alt=""/></div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO DESTACADO -->
+{% if video %}
+<section id="video" class="video-sec">
+  <div class="video-inner">
+    <div class="sec-center" style="margin-bottom:3rem">
+      <div class="sec-tag">Muévete con nosotros</div>
+      <h2 class="sec-title" style="color:#fff">Video <em>Destacado</em></h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="video-wrap">
+      {% if video.youtube_embed_url %}
+      <iframe src="{{ video.youtube_embed_url }}" title="{{ video.titulo }}"
+        frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      {% elif video.video %}
+      <video controls preload="metadata" {% if video.portada %}poster="{{ video.portada.url }}"{% endif %}>
+        <source src="{{ video.video.url }}" type="video/mp4"/>
+        Tu navegador no soporta el elemento de video.
+      </video>
+      {% endif %}
+    </div>
+    <p class="video-caption"><strong>{{ video.titulo }}</strong><br/>{{ video.descripcion }}</p>
+  </div>
+</section>
+{% endif %}
+
+<!-- INFO ACADEMIA -->
+<section id="academia" class="info-sec">
+  <div class="info-inner">
+    <div class="sec-center" style="margin-bottom:3rem">
+      <div class="sec-tag">Información</div>
+      <h2 class="sec-title" style="color:#fff">La <em>Academia</em></h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="info-grid">
+      {% for c in info_cards %}
+      <div class="info-card">
+        <span class="info-icon">{{ c.icono }}</span>
+        <h3>{{ c.titulo }}</h3>
+        <p>{{ c.contenido_html|safe }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto" class="contacto-sec">
+  {% if messages %}
+  <div class="django-messages">
+    {% for m in messages %}<div class="django-msg {{ m.tags }}">{{ m }}</div>{% endfor %}
+  </div>
+  {% endif %}
+  <div class="contacto-inner">
+    <div class="contacto-grid">
+      <div class="c-info">
+        <div class="sec-tag">Contáctanos</div>
+        <h2><em>Únete</em> a los<br/>Guerreros CF</h2>
+        <p style="color:rgba(255,255,255,.7);margin:1.5rem 0 2rem;font-size:1rem;line-height:1.7">
+          ¿Quieres formar parte de nuestra gran familia? Contáctanos y te damos toda la información sobre inscripciones, horarios y categorías.
+        </p>
+        <div class="c-items">
+          {% for c in contactos %}
+          <div class="c-item">
+            <div class="c-item-icon">{{ c.icono }}</div>
+            <div class="c-item-text">
+              <strong>{{ c.titulo }}</strong>
+              <span>{{ c.detalle }}</span>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <form class="c-form" id="contactoForm" method="post" action="{% url 'enviar_mensaje' %}">
+        {% csrf_token %}
+        <h3>Envíanos un mensaje</h3>
+        <div class="fg">
+          <label>Nombre completo</label>
+          <input type="text" name="nombre" placeholder="Tu nombre" required/>
+        </div>
+        <div class="fg">
+          <label>WhatsApp / Teléfono</label>
+          <input type="tel" name="telefono" placeholder="241 xxx xxxx"/>
+        </div>
+        <div class="fg">
+          <label>Categoría de interés</label>
+          <select name="categoria">
+            <option value="">Selecciona una categoría</option>
+            {% for cat in categorias_form %}
+            <option>{{ cat }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="fg">
+          <label>Mensaje</label>
+          <textarea name="mensaje" placeholder="¿En qué podemos ayudarte?"></textarea>
+        </div>
+        <button type="button" onclick="sendWA()">Enviar por WhatsApp ⚽</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <a href="#inicio" class="footer-brand">
+          <img src="{% static 'core/img/logo.png' %}" alt="Logo"/>
+          <span>Guerreros <em>CF</em></span>
+        </a>
+        <p class="footer-desc">Academia Crística Guerreros CF Yauhquemehcan. Formando campeones con fe, disciplina y trabajo en equipo desde San Dionisio, Tlaxcala.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navegación</h4>
+        <ul>
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#noticias">Noticias</a></li>
+          <li><a href="#campeonas">Campeonas</a></li>
+          <li><a href="#finales">Finales</a></li>
+          <li><a href="#galeria">Galería</a></li>
+          <li><a href="#publicidad">Publicidad</a></li>
+          <li><a href="#academia">Academia</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="tel:2411055982">📱 241-105-5982</a></li>
+          <li><a href="https://wa.me/522411055982">💬 WhatsApp</a></li>
+          <li><a href="#academia">📍 San Dionisio Yauhquemehcan</a></li>
+          <li><a href="#academia">⏰ Lun-Vie 4:00–6:00 PM</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 <span class="gold">Academia Crística Guerreros CF</span> — Yauhquemehcan, Tlaxcala 🏆</p>
+      <p>Disciplina · Respeto · Esfuerzo · Trabajo en equipo</p>
+    </div>
+  </div>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLB()">
+  <button class="lb-close" onclick="closeLB()">×</button>
+  <img class="lb-img" id="lbImg" src="" alt=""/>
+</div>
+
+<!-- WHATSAPP FLOAT -->
+<a class="wa-float" href="https://wa.me/522411055982" target="_blank">💬</a>
+
+<script src="{% static 'core/js/main.js' %}"></script>
+<script src="{% static 'core/js/noticias.js' %}"></script>
+</body>
+</html>

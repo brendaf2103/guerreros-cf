@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+db.sqlite3
+staticfiles/
+.venv/
+venv/
+*.log
+.env
+
+# El video pesa ~180 MB y GitHub rechaza archivos de más de 100 MB.
+# Súbelo a YouTube y pega el link en el admin (campo "Link de YouTube")
+# en vez de subir el archivo. Ver README, sección "Publicar el sitio".
+media/videos/*.mp4

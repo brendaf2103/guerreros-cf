@@ -1,0 +1,70 @@
+{% load static %}
+<!-- ══════════════════════════════════════════════════════════
+     APARTADO: NOTICIAS
+     Este bloque vive aparte en core/templates/core/partials/noticias.html
+     Su CSS está en core/static/core/css/noticias.css
+     Su JS  está en core/static/core/js/noticias.js
+     ══════════════════════════════════════════════════════════ -->
+<section id="noticias" class="noticias-sec">
+  <div class="sec-center" style="max-width:1200px;margin:0 auto 3rem">
+    <div class="sec-tag">Últimas noticias</div>
+    <h2 class="sec-title">Lo más <em>reciente</em></h2>
+    <div class="sec-line"></div>
+  </div>
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="news-layout">
+
+      {% if noticia_principal %}
+      <a class="news-hero" href="javascript:void(0)"
+         onclick="openNoticia(this)"
+         data-titulo="{{ noticia_principal.titulo }}"
+         data-categoria="{{ noticia_principal.categoria }}"
+         data-resumen="{{ noticia_principal.resumen }}"
+         data-fecha="{{ noticia_principal.fecha_texto }}"
+         data-img="{{ noticia_principal.imagen.url }}">
+        <img src="{{ noticia_principal.imagen.url }}" alt="{{ noticia_principal.titulo }}"/>
+        <div class="news-hero-overlay"></div>
+        <div class="news-hero-body">
+          <span class="news-cat">{{ noticia_principal.categoria }}</span>
+          <h3>{{ noticia_principal.titulo }}</h3>
+          <p>{{ noticia_principal.resumen }}</p>
+        </div>
+      </a>
+      {% endif %}
+
+      <div class="news-grid-small">
+        {% for n in noticias_secundarias %}
+        <a class="news-card-small" href="javascript:void(0)"
+           onclick="openNoticia(this)"
+           data-titulo="{{ n.titulo }}"
+           data-categoria="{{ n.categoria }}"
+           data-resumen="{{ n.resumen }}"
+           data-fecha="{{ n.fecha_texto }}"
+           data-img="{{ n.imagen.url }}">
+          <div class="ncs-img"><img src="{{ n.imagen.url }}" alt="{{ n.titulo }}"/></div>
+          <div class="ncs-body">
+            <div class="ncs-cat">{{ n.categoria }}</div>
+            <div class="ncs-title">{{ n.titulo }}</div>
+            <div class="ncs-date">{{ n.fecha_texto }}</div>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- MODAL DE NOTICIA -->
+<div class="noticia-modal" id="noticiaModal" onclick="if(event.target===this) closeNoticia()">
+  <div class="noticia-modal-box">
+    <button class="noticia-modal-close" onclick="closeNoticia()">×</button>
+    <img class="noticia-modal-img" id="noticiaModalImg" src="" alt=""/>
+    <div class="noticia-modal-body">
+      <span class="news-cat" id="noticiaModalCat"></span>
+      <h3 id="noticiaModalTitulo"></h3>
+      <div class="noticia-modal-fecha" id="noticiaModalFecha"></div>
+      <p id="noticiaModalResumen"></p>
+    </div>
+  </div>
+</div>
