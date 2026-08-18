@@ -221,3 +221,4 @@ Cada vez que hagas `git push` con cambios de código, Render vuelve a
 desplegar el sitio automáticamente. Los cambios de contenido (fotos,
 noticias, etc.) se hacen siempre desde `/admin/`, sin tocar código ni
 volver a hacer `push`.
+"# guerreros-cf" 
