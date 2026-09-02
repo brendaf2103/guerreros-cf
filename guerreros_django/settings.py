@@ -39,6 +39,9 @@ INSTALLED_APPS += ["django.contrib.staticfiles"]
 
 if USAR_CLOUDINARY:
     INSTALLED_APPS += ["cloudinary"]
+    
+if USAR_CLOUDINARY:
+    DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
 INSTALLED_APPS += ["core"]
 
