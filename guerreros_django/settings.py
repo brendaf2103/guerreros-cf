@@ -40,9 +40,6 @@ INSTALLED_APPS += ["django.contrib.staticfiles"]
 if USAR_CLOUDINARY:
     INSTALLED_APPS += ["cloudinary"]
     
-if USAR_CLOUDINARY:
-    DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
-
 INSTALLED_APPS += ["core"]
 
 MIDDLEWARE = [
@@ -119,7 +116,11 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 # con cache y compresión — ideal para Render/Railway/Heroku.
 STORAGES = {
     "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
+        "BACKEND": (
+            "cloudinary_storage.storage.MediaCloudinaryStorage"
+            if USAR_CLOUDINARY
+            else "django.core.files.storage.FileSystemStorage"
+        ),
     },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
