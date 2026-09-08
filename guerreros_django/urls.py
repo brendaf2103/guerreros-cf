@@ -8,6 +8,15 @@ urlpatterns = [
     path("", include("core.urls")),
 ]
 
+# Servir archivos multimedia (imágenes y videos)
+urlpatterns += static(
+    settings.MEDIA_URL,
+    document_root=settings.MEDIA_ROOT
+)
+
+# Servir archivos estáticos cuando DEBUG esté activo
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(
+        settings.STATIC_URL,
+        document_root=settings.STATIC_ROOT
+    )
