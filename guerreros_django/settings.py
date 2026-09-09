@@ -30,16 +30,13 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "django.contrib.staticfiles",
 ]
 
 if USAR_CLOUDINARY:
     INSTALLED_APPS += ["cloudinary_storage"]
-
-INSTALLED_APPS += ["django.contrib.staticfiles"]
-
-if USAR_CLOUDINARY:
     INSTALLED_APPS += ["cloudinary"]
-    
+
 INSTALLED_APPS += ["core"]
 
 MIDDLEWARE = [
@@ -126,6 +123,8 @@ STORAGES = {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
+
+STATICFILES_STORAGE = STORAGES["staticfiles"]["BACKEND"]
 
 # ── ARCHIVOS MULTIMEDIA (fotos y video subidos: /media/img, /media/videos) ──
 MEDIA_URL = "media/"
